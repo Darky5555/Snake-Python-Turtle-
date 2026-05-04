@@ -54,12 +54,12 @@ class Head(Turtle):
 
 
 class Segment(Turtle):
-    def __init__(self, other):
+    def __init__(self, body):
         super().__init__()
-        pass
-
-    def move(self, other):
-        pass
+        self.shape("square")
+        self.color("green")
+        self.penup()
+        self.goto(body[-1].xcor(), body[-1].ycor())
 
 
 class Apple(Turtle):
@@ -80,6 +80,10 @@ screen.setup(520, 520)
 playing_area()
 
 head = Head()
+body = []
+body.append(head)
+body.append(Segment(body))
+
 apple = Apple()
 
 screen.listen()
@@ -90,10 +94,23 @@ screen.onkey(head.right, "Right")
 
 def game_loop():
     if head.alive:
+        for i in range(len(body) - 1, 0, -1):
+            x = body[i - 1].xcor()
+            y = body[i - 1].ycor()
+            body[i].goto(x, y)
+
         head.move()
+
         if head.distance(apple) < 20:
             apple.relocate()
-        screen.ontimer(game_loop, 150)
+            body.append(Segment(body))
+
+        for segment in body[1:]:
+            if head.distance(segment) < 20:
+                head.hideturtle()
+                head.alive = False
+
+    screen.ontimer(game_loop, 150)
 
 game_loop()
 screen.exitonclick()
