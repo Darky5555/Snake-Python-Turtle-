@@ -87,10 +87,10 @@ body.append(Segment(body))
 apple = Apple()
 
 screen.listen()
-screen.onkey(head.up, "Up")
-screen.onkey(head.down, "Down")
-screen.onkey(head.left, "Left")
-screen.onkey(head.right, "Right")
+screen.onkey(head.up, "w")
+screen.onkey(head.down, "s")
+screen.onkey(head.left, "a")
+screen.onkey(head.right, "d")
 
 def game_loop():
     if head.alive:
@@ -105,12 +105,12 @@ def game_loop():
             apple.relocate()
             body.append(Segment(body))
 
-        for segment in body[1:]:
+        for segment in body[3:]:
             if head.distance(segment) < 20:
                 head.hideturtle()
                 head.alive = False
 
-    screen.ontimer(game_loop, 150)
+    screen.ontimer(game_loop, 150) #runs game loop after 150 millisecond delay, screen refreshes at 150 millisecond rate
 
 game_loop()
 screen.exitonclick()
