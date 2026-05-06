@@ -112,5 +112,5 @@ def game_loop():
 
     screen.ontimer(game_loop, 150) #runs game loop after 150 millisecond delay, screen refreshes at 150 millisecond rate
 
-game_loop()
+screen.onkey(game_loop, "space")
 screen.exitonclick()
